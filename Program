@@ -1,0 +1,54 @@
+class lab1 {
+    public static void main(String[] args){
+        // создание первого массива
+        short[] c = new short [11];
+        short k=0;
+        //заполнение массива нечетными числами
+        for (short i =5; i<=25;i+=2){
+            c[k]=i;
+            k++;
+        }
+        
+        // создание второго массива
+        float[] x = new float [20];
+        // заполнение массива случайными числами
+        for (int i =0; i<20;i++){
+            double a=Math.random()*(14+3)-3;
+            x[i]=(float)a;
+        }
+
+        // создание третьего массива
+        double[][] massiv = new double[11][20];
+
+        // заполнение массива по условиям задачи
+        for (int i=0;i<11;i++){
+            for(int j=0;j<20;j++){
+                if (c[i]==9){               
+                    massiv[i][j]=Math.sin(Math.pow((0.25 + Math.pow(x[j]/2,x[j]))/4,2));
+
+                }
+                else if (c[i]==5 || c[i]==7 || c[i]==11 || c[i]==15 || c[i]==25){
+                    // проверка на то, что внутреннее значение >=-1 и <=1
+                    //if (Math.pow(Math.E,Math.pow(Math.abs(x[j])/2*(-1),1/3) )>=-1 && Math.pow(Math.E,Math.pow(Math.abs(x[j])/2*(-1),1/3) )<=1) 
+                    massiv[i][j]=Math.asin(Math.pow(Math.E,Math.pow(Math.abs(x[j])/2*(-1),1/3) ));
+                    //else massiv[i][j]=Double.NaN;
+                }
+                else {
+                    //if (Math.pow(4/(Math.pow(Math.abs(x[j]),x[j])),2)>0)
+                    massiv[i][j]=2*Math.exp(Math.pow(4/(Math.pow(Math.abs(x[j]),x[j])),2));
+                    //-else massiv[i][j]=Double.NaN;
+                    }
+            }
+        }
+        for (int i=0;i<11;i++){
+            for (int j=0;j<20;j++){
+
+                //проверка на значение infinity
+                if (Double.isInfinite(massiv[i][j])) massiv[i][j]=Double.NaN;
+
+                System.out.printf("%.4f\t",massiv[i][j]);
+                System.out.print("  ");   
+            }
+        }
+    }
+}
