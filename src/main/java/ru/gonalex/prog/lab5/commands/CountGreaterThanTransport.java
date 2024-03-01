@@ -1,10 +1,7 @@
 package ru.gonalex.prog.lab5.commands;
 
 import ru.gonalex.prog.lab5.enums.Transport;
-import ru.gonalex.prog.lab5.manage.Command;
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
-import ru.gonalex.prog.lab5.manage.TroubleWatcher;
+import ru.gonalex.prog.lab5.manage.*;
 
 /**
  * Класс, реализующий команду [count_greater_than_transport] - вывести количество элементов, значение поля transport которых больше заданного
@@ -14,19 +11,19 @@ import ru.gonalex.prog.lab5.manage.TroubleWatcher;
 public class CountGreaterThanTransport extends Command {
     public CountGreaterThanTransport() {
         super("count_greater_than_transport", "вывести количество элементов, значение поля transport которых больше заданного");
-        setHelp(String.format("Параметр команды - элемент перечисления Transport [%s]", Manipulation.getTransportValuesAsString()));
+        setHelp(String.format("Параметр команды - элемент перечисления Transport [%s]", CommandManipulation.getTransportValuesAsString()));
         params.isSubjectManipulation = true;
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult execute(RealtorCommandParams params) {
+    public CommandResult execute(CommandParams params) {
         TroubleWatcher.clear();
         if(params.params == null || params.params.isEmpty()) {
-            TroubleWatcher.putProblem(String.format("Параметр не указан. Требуется одно из значений [%s]", Manipulation.getTransportValuesAsString()));
-            return new CommandExecuteResult(TroubleWatcher.getProblem());
+            TroubleWatcher.putProblem(String.format("Параметр не указан. Требуется одно из значений [%s]", CommandManipulation.getTransportValuesAsString()));
+            return new CommandResult(TroubleWatcher.getProblem());
         }
 
         Transport t;
@@ -34,11 +31,11 @@ public class CountGreaterThanTransport extends Command {
             t = Transport.valueOf(params.params.toUpperCase());
         }
         catch(Exception ex) {
-            TroubleWatcher.putProblem(String.format("Параметр неверный. Ожидается [%s]", Manipulation.getTransportValuesAsString()));
-            return new CommandExecuteResult(TroubleWatcher.getProblem());
+            TroubleWatcher.putProblem(String.format("Параметр неверный. Ожидается [%s]", CommandManipulation.getTransportValuesAsString()));
+            return new CommandResult(TroubleWatcher.getProblem());
         }
 
         var filterData = params.realtor.filterGreaterThanTransport(t);
-        return new CommandExecuteResult(String.valueOf(filterData.size()));
+        return new CommandResult(String.valueOf(filterData.size()));
     }
 }

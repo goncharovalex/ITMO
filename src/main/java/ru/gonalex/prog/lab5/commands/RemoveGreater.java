@@ -1,7 +1,8 @@
 package ru.gonalex.prog.lab5.commands;
 
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
+import ru.gonalex.prog.lab5.manage.CommandParams;
+import ru.gonalex.prog.lab5.manage.CommandResult;
+import ru.gonalex.prog.lab5.manage.CommandManipulation;
 import ru.gonalex.prog.lab5.models.Flat;
 
 /**
@@ -9,7 +10,7 @@ import ru.gonalex.prog.lab5.models.Flat;
  * @author gonalex
  * @version 1.0
  */
-public class RemoveGreater extends Manipulation {
+public class RemoveGreater extends CommandManipulation {
     public RemoveGreater() {
         super("remove_greater",
                 "удалить из коллекции все элементы, превышающие заданный",
@@ -20,22 +21,22 @@ public class RemoveGreater extends Manipulation {
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
-    public CommandExecuteResult execute(RealtorCommandParams params) { // параметр хоть и не используется, но так надо
+    public CommandResult execute(CommandParams params) { // параметр хоть и не используется, но так надо
         counter = 1;
         flat = new Flat();
-        return new CommandExecuteResult();
+        return new CommandResult();
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#executeComplete(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#executeComplete(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult executeComplete(RealtorCommandParams params) {
-        if (flat == null) return new CommandExecuteResult("Нет объекта для сравнения по критерию");
+    public CommandResult executeComplete(CommandParams params) {
+        if (flat == null) return new CommandResult("Нет объекта для сравнения по критерию");
 
         boolean result = params.realtor.removeGreater(flat);
-        return new CommandExecuteResult(result ? "Из коллекции удалены элементы согласно критерию" : "Коллекция не изменилась, т.к. нет элементов, удовлетворяющих критерию");
+        return new CommandResult(result ? "Из коллекции удалены элементы согласно критерию" : "Коллекция не изменилась, т.к. нет элементов, удовлетворяющих критерию");
     }
 }

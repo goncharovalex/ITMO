@@ -1,8 +1,8 @@
 package ru.gonalex.prog.lab5.commands;
 
 import ru.gonalex.prog.lab5.manage.Command;
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
+import ru.gonalex.prog.lab5.manage.CommandParams;
+import ru.gonalex.prog.lab5.manage.CommandResult;
 
 /**
  * Класс, реализующий команду [show] - вывести все элементы коллекции
@@ -17,10 +17,10 @@ public class Show extends Command {
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult execute(RealtorCommandParams params) {
-        return new CommandExecuteResult(params.realtor.allFlatsInfo());
+    public CommandResult execute(CommandParams params) {
+        return new CommandResult(params.realtor.allFlatsInfo());
     }
 }

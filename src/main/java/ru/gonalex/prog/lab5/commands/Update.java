@@ -1,9 +1,6 @@
 package ru.gonalex.prog.lab5.commands;
 
-import ru.gonalex.prog.lab5.manage.Command;
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
-import ru.gonalex.prog.lab5.manage.TroubleWatcher;
+import ru.gonalex.prog.lab5.manage.*;
 
 import static java.lang.Long.parseLong;
 
@@ -12,7 +9,7 @@ import static java.lang.Long.parseLong;
  * @author gonalex
  * @version 1.0
  */
-public class Update extends Manipulation {
+public class Update extends CommandManipulation {
     public Update() {
         super("update", "обновить значение элемента коллекции", "update id, где id - уникальный номер элемента коллекции");
         params.isSubjectManipulation = true;
@@ -21,15 +18,15 @@ public class Update extends Manipulation {
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
-    public CommandExecuteResult execute(RealtorCommandParams params) {
+    public CommandResult execute(CommandParams params) {
         TroubleWatcher.clear();
         if(params.params.isEmpty()) {
             TroubleWatcher.putProblem("id записи не указан");
-            return new CommandExecuteResult(TroubleWatcher.getProblem());
+            return new CommandResult(TroubleWatcher.getProblem());
         }
-        CommandExecuteResult cer = new CommandExecuteResult();
+        CommandResult cer = new CommandResult();
         long id;
         try {
             id = parseLong(params.params);
@@ -49,13 +46,13 @@ public class Update extends Manipulation {
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#executeComplete(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#executeComplete(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult executeComplete(RealtorCommandParams params) {
-        if (flat == null) return new CommandExecuteResult("Нет объекта для обновления");
+    public CommandResult executeComplete(CommandParams params) {
+        if (flat == null) return new CommandResult("Нет объекта для обновления");
 
         params.realtor.postFlat(flat);
-        return new CommandExecuteResult("Исправления внесены");
+        return new CommandResult("Исправления внесены");
     }
 }

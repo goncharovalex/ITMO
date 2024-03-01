@@ -90,7 +90,8 @@ public class DataProviderJSON implements DataProviderInterface {
             if (jsonText.length() == 0) {
                 jsonText.append("[]");
             }
-            var collectionType = new TypeToken<HashSet<Flat>>() {}.getType();
+            var collectionType = new TypeToken<HashSet<Flat>>() {
+            }.getType();
             dataWrapper.flats = gson.fromJson(jsonText.toString(), collectionType);
         }
         catch (FileNotFoundException ex) {

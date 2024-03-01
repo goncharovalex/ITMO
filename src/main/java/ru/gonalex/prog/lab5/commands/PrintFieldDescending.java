@@ -1,8 +1,9 @@
 package ru.gonalex.prog.lab5.commands;
 
 import ru.gonalex.prog.lab5.manage.Command;
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
+import ru.gonalex.prog.lab5.manage.CommandParams;
+import ru.gonalex.prog.lab5.manage.CommandResult;
+import ru.gonalex.prog.lab5.manage.CommandManipulation;
 import ru.gonalex.prog.lab5.models.Flat;
 
 import java.util.ArrayList;
@@ -15,17 +16,17 @@ import java.util.ArrayList;
 public class PrintFieldDescending extends Command {
     public PrintFieldDescending() {
         super("print_field_descending", "вывести значения поля transport всех элементов в порядке убывания");
-        setHelp(String.format("Параметр команды - элемент перечисления Transport [%s]", Manipulation.getTransportValuesAsString()));
+        setHelp(String.format("Параметр команды - элемент перечисления Transport [%s]", CommandManipulation.getTransportValuesAsString()));
         params.isSubjectManipulation = true;
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult execute(RealtorCommandParams params) {
+    public CommandResult execute(CommandParams params) {
         if(params.realtor == null || params.realtor.getCollectionSize() == 0)
-            return new CommandExecuteResult("Нет данных для обработки");
+            return new CommandResult("Нет данных для обработки");
 
         ArrayList<Flat> sortedData = params.realtor.sortByTransportDescending();
         ArrayList<String> lst = new ArrayList<>();
@@ -33,6 +34,6 @@ public class PrintFieldDescending extends Command {
             lst.add(flat.getTransport() == null ? "" : flat.getTransport().toString()); // выводим пустые строки, если Transport не указан
             //if(flat.getTransport() != null) lst.add(flat.getTransport().toString()); // не выводим пустые строки, если Transport не указан
         }
-        return new CommandExecuteResult(lst);
+        return new CommandResult(lst);
     }
 }

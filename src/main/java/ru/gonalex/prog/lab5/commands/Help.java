@@ -1,8 +1,8 @@
 package ru.gonalex.prog.lab5.commands;
 
 import ru.gonalex.prog.lab5.manage.Command;
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
+import ru.gonalex.prog.lab5.manage.CommandParams;
+import ru.gonalex.prog.lab5.manage.CommandResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,12 +29,12 @@ public class Help extends Command {
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult execute(RealtorCommandParams params) {
+    public CommandResult execute(CommandParams params) {
         ArrayList<String> hlp = new ArrayList<String>();
         commands.forEach((key, value) -> hlp.add(String.format("%s - %s [%s]", value.getName(), value.getDescription(), value.getHelp())));
-        return new CommandExecuteResult(hlp);
+        return new CommandResult(hlp);
     }
 }

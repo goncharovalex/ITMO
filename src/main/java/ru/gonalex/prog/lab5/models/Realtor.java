@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Класс <b>Риэлтор</b>. Реализует управление данными по квартирам
  * @author gonalex
- * @version 1.0
+ * @version 1.1
  */
 public class Realtor {
 
@@ -21,6 +21,9 @@ public class Realtor {
     private long lastID = 0;
 
     ElementWeight elementWeight;
+
+    /** Изменены ли данные по коллекции квартир? */
+    private boolean isDataModifired = false;
 
     /**
     * Класс класса по умолчанию */
@@ -69,6 +72,12 @@ public class Realtor {
         return minDate;
     }
 
+    /** Геттер "изменена ли коллекция?" */
+    public boolean getIsDataModifired() { return isDataModifired; }
+
+    /** Сбросить отметку о том, что коллекция была изменена. */
+    public void resetIsDataModifired() { isDataModifired = false; }
+
     /**
      * Возвращает последний ID записи коллекции
      * @return id записи коллекции */
@@ -94,6 +103,7 @@ public class Realtor {
         flat.setId(++lastID);
         flat.setCreationDate(LocalDate.now());
         flats.add(flat);
+        isDataModifired = true;
     }
 
     /**
@@ -224,15 +234,19 @@ public class Realtor {
      * Удалить квартиру из коллекции
      * @param flat объект типа Flat
      */
-    public void removeFlat(Flat flat) {
+    public void removeFlat(Flat flat)
+    {
         flats.remove(flat);
+        isDataModifired = true;
     }
 
     /**
      * Очистить коллекцию
      */
-    public void clearAll() {
+    public void clearAll()
+    {
         flats.clear();
+        isDataModifired = true;
     }
 
     /**

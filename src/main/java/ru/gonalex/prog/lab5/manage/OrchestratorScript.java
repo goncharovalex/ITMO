@@ -7,12 +7,9 @@ import ru.gonalex.prog.lab5.models.Realtor;
  * Оркестратор для управления коллекцией квартир с использованием файла скрипта (с перечнем команд)
  * и без интерактивного взаимодействия с пользователем
  * @author gonalex
- * @version 1.0
+ * @version 1.1
  */
 public class OrchestratorScript extends Orchestrator {
-
-    /** Имя файла с данными в формате JSON, в котором хранится коллекция риэлтора */
-    private String fileNameJson;
 
     /** Ридер, который обрабатываем команды из скрипта */
     private OrchestratorReader reader;
@@ -23,7 +20,7 @@ public class OrchestratorScript extends Orchestrator {
     public OrchestratorScript(Realtor realtor, String fileNameJson) {
         super(realtor);
         this.fileNameJson = fileNameJson;
-        reader = new OrchestratorReader(commands, realtor, fileNameJson);
+        reader = new OrchestratorReader(this);
     }
 
     /** Передача команды оркестратору на исполнение.
@@ -36,15 +33,4 @@ public class OrchestratorScript extends Orchestrator {
         }
     }
 
-    /** Передача команды оркестратору на исполнение.
-     * @param  command - команда на выполнение */
-    /*
-    public void putCommand(String command) {
-        try {
-            reader.read(command);
-        } catch (UnknownOrchestratorScannerException e) {
-            TroubleWatcher.putProblem(e.getMessage());
-        }
-    }
-   */
 }

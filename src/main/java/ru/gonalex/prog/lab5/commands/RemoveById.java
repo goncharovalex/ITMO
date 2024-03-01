@@ -1,9 +1,6 @@
 package ru.gonalex.prog.lab5.commands;
 
-import ru.gonalex.prog.lab5.manage.Command;
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
-import ru.gonalex.prog.lab5.manage.TroubleWatcher;
+import ru.gonalex.prog.lab5.manage.*;
 
 import static java.lang.Long.parseLong;
 
@@ -12,24 +9,24 @@ import static java.lang.Long.parseLong;
  * @author gonalex
  * @version 1.0
  */
-public class RemoveById extends Manipulation {
+public class RemoveById extends CommandManipulation {
     public RemoveById() {
         super("remove_by_id", "удалить элемент из коллекции", "remove_by_id id, где id - уникальный номер элемента коллекции");
         params.isSubjectManipulation = true;
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult execute(RealtorCommandParams params) {
+    public CommandResult execute(CommandParams params) {
         TroubleWatcher.clear();
         if(params.params.isEmpty()) {
             TroubleWatcher.putProblem("id записи не указан");
-            return new CommandExecuteResult(TroubleWatcher.getProblem());
+            return new CommandResult(TroubleWatcher.getProblem());
         }
 
-        CommandExecuteResult cer = new CommandExecuteResult();
+        CommandResult cer = new CommandResult();
         long id;
         try {
             id = parseLong(params.params);

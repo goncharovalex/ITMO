@@ -1,8 +1,8 @@
 package ru.gonalex.prog.lab5.commands;
 
 import ru.gonalex.prog.lab5.manage.Command;
-import ru.gonalex.prog.lab5.manage.CommandExecuteResult;
-import ru.gonalex.prog.lab5.manage.RealtorCommandParams;
+import ru.gonalex.prog.lab5.manage.CommandParams;
+import ru.gonalex.prog.lab5.manage.CommandResult;
 import ru.gonalex.prog.lab5.manage.Utils;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * Класс, реализующий команду [info] - вывести информацию о коллекции
  * @author gonalex
- * @version 1.0
+ * @version 1.1
  */
 public class Info extends Command {
     public Info() {
@@ -20,10 +20,10 @@ public class Info extends Command {
     }
 
     /**
-     * @see ru.gonalex.prog.lab5.manage.Command#execute(RealtorCommandParams params)
+     * @see ru.gonalex.prog.lab5.manage.Command#execute(CommandParams params)
      * */
     @Override
-    public CommandExecuteResult execute(RealtorCommandParams params) {
+    public CommandResult execute(CommandParams params) {
         var lst = new ArrayList<String>();
 
         if(params.realtor == null || params.realtor.getCollectionSize() == 0)
@@ -33,7 +33,8 @@ public class Info extends Command {
             lst.add("Тип: " + params.realtor.getCollectionType());
             lst.add("Количество элементов: " + params.realtor.getCollectionSize());
             lst.add("Дата инициализации: " + Utils.dateToString(params.realtor.getCreationDate()));
+            lst.add("Файл данных: " + params.fileNameJson);
         }
-        return new CommandExecuteResult(lst);
+        return new CommandResult(lst);
     }
 }

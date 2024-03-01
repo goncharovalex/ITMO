@@ -16,6 +16,10 @@ public abstract class Orchestrator {
 
     public Realtor realtor;
     public HashMap<String, Command> commands = new HashMap<>();
+    public LocalTempCopy localTempCopy = new LocalTempCopy();
+
+    /** Имя файла с данными в формате JSON, в котором хранится коллекция риэлтора */
+    public String fileNameJson;
 
     public Orchestrator(Realtor realtor) {
         this.realtor = realtor;
